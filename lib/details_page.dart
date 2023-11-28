@@ -13,26 +13,18 @@ class DetailsPage extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
           icon: const Icon(
             Icons.arrow_back_ios,
-            color: Colors.white,
           ),
         ),
         title: Text(
           item.name,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.w500,
-            fontFamily: 'Roboto',
-          ),
         ),
-        backgroundColor: const Color.fromRGBO(15, 76, 117, 1),
       ),
       body: Center(
         child: Container(
           height: MediaQuery.of(context).size.height * 0.5,
           margin: const EdgeInsets.symmetric(horizontal: 16),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          color: const Color.fromRGBO(27, 38, 44, 1),
+          color: Theme.of(context).primaryColor,
           child: Column(
             children: [
               Container(
@@ -45,25 +37,19 @@ class DetailsPage extends StatelessWidget {
                   children: [
                     Text(
                       item.name,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Roboto',
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium!,
                     ),
                     Text(
                       item.tag,
-                      style: TextStyle(
-                        color: item.color == 'red'
-                            ? const Color.fromRGBO(255, 0, 0, 1)
-                            : item.color == 'green'
-                                ? const Color.fromRGBO(0, 255, 0, 1)
-                                : const Color.fromRGBO(0, 0, 255, 1),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'Roboto',
-                      ),
+                      style: Theme.of(context).textTheme.titleSmall!.merge(
+                            TextStyle(
+                              color: item.color == 'red'
+                                  ? const Color.fromRGBO(255, 0, 0, 1)
+                                  : item.color == 'green'
+                                      ? const Color.fromRGBO(0, 255, 0, 1)
+                                      : const Color.fromRGBO(0, 0, 255, 1),
+                            ),
+                          ),
                     ),
                     const SizedBox(
                       height: 32,
@@ -78,16 +64,11 @@ class DetailsPage extends StatelessWidget {
                 itemCount: item.criteria.length,
                 shrinkWrap: true,
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                separatorBuilder: (context, index) => const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8),
+                separatorBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Text(
                     'and',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'Roboto',
-                    ),
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
                 itemBuilder: (context, index) {
@@ -96,6 +77,7 @@ class DetailsPage extends StatelessWidget {
                   return RichText(
                     text: TextSpan(
                       children: getCriteria(criteria, context),
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   );
                 },

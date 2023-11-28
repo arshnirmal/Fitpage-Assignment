@@ -19,7 +19,47 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color.fromRGBO(15, 76, 117, 1),
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'Roboto',
+          ),
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
+        ),
+        primaryColor: const Color.fromRGBO(27, 38, 44, 1),
+        textTheme: const TextTheme(
+          titleMedium: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'Roboto',
+          ),
+          titleSmall: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            fontFamily: 'Roboto',
+          ),
+          bodyMedium: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            fontFamily: 'Roboto',
+          ),
+          bodySmall: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            fontFamily: 'Roboto',
+          ),
+        ),
       ),
+      debugShowCheckedModeBanner: false,
       home: const HomePage(),
     );
   }
@@ -66,26 +106,17 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text(
           'Home Page',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.w500,
-            fontFamily: 'Roboto',
-          ),
         ),
-        backgroundColor: const Color.fromRGBO(15, 76, 117, 1),
       ),
       body: isDataLoading
           ? const Center(
-              child: CircularProgressIndicator(
-                color: Color.fromRGBO(27, 38, 44, 1),
-              ),
+              child: CircularProgressIndicator(),
             )
           : Center(
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                color: const Color.fromRGBO(27, 38, 44, 1),
+                color: Theme.of(context).primaryColor,
                 child: ListView.separated(
                   itemCount: items.length,
                   shrinkWrap: true,
@@ -112,29 +143,26 @@ class _HomePageState extends State<HomePage> {
                       },
                       title: Text(
                         item.name,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Roboto',
-                          decoration: TextDecoration.underline,
-                          decorationColor: Colors.white,
-                        ),
+                        style: Theme.of(context).textTheme.titleMedium!.merge(
+                              const TextStyle(
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors.white,
+                              ),
+                            ),
                       ),
                       subtitle: Text(
                         item.tag,
-                        style: TextStyle(
-                          color: item.color == 'red'
-                              ? const Color.fromRGBO(255, 0, 0, 1)
-                              : item.color == 'green'
-                                  ? const Color.fromRGBO(0, 255, 0, 1)
-                                  : const Color.fromRGBO(0, 0, 255, 1),
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Roboto',
-                          decoration: TextDecoration.underline,
-                          decorationColor: Colors.white,
-                        ),
+                        style: Theme.of(context).textTheme.titleSmall!.merge(
+                              TextStyle(
+                                color: item.color == 'red'
+                                    ? const Color.fromRGBO(255, 0, 0, 1)
+                                    : item.color == 'green'
+                                        ? const Color.fromRGBO(0, 255, 0, 1)
+                                        : const Color.fromRGBO(0, 0, 255, 1),
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors.white,
+                              ),
+                            ),
                       ),
                     );
                   },

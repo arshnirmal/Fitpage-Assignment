@@ -65,12 +65,7 @@ List<TextSpan> getCriteria(Criteria criteria, BuildContext context) {
                 currentIndex,
                 startIndex,
               ),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                fontFamily: 'Roboto',
-              ),
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           );
         }
@@ -79,9 +74,11 @@ List<TextSpan> getCriteria(Criteria criteria, BuildContext context) {
           textSpans.add(
             TextSpan(
               text: '(${criteria.variable!['\$$variableName']['values'][0]})',
-              style: const TextStyle(
-                color: Colors.blue,
-              ),
+              style: Theme.of(context).textTheme.bodyMedium!.merge(
+                    const TextStyle(
+                      color: Colors.blue,
+                    ),
+                  ),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   Navigator.push(
@@ -100,9 +97,11 @@ List<TextSpan> getCriteria(Criteria criteria, BuildContext context) {
           textSpans.add(
             TextSpan(
               text: '(${criteria.variable!['\$$variableName']['default_value']})',
-              style: const TextStyle(
-                color: Colors.blue,
-              ),
+              style: Theme.of(context).textTheme.bodyMedium!.merge(
+                    const TextStyle(
+                      color: Colors.blue,
+                    ),
+                  ),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   Navigator.push(
@@ -128,6 +127,7 @@ List<TextSpan> getCriteria(Criteria criteria, BuildContext context) {
           text: text.substring(
             currentIndex,
           ),
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
       );
     }

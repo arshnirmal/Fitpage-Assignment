@@ -13,17 +13,15 @@ class VariablesPage extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
           icon: const Icon(
             Icons.arrow_back_ios,
-            color: Colors.white,
           ),
         ),
-        backgroundColor: const Color.fromRGBO(15, 76, 117, 1),
       ),
       body: Center(
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 16),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          color: const Color.fromRGBO(27, 38, 44, 1),
-          child:ListView.separated(
+          color: Theme.of(context).primaryColor,
+          child: ListView.separated(
             shrinkWrap: true,
             itemCount: variable['values'].length,
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
@@ -42,12 +40,7 @@ class VariablesPage extends StatelessWidget {
               debugPrint("Values: $values");
               return Text(
                 '${values[index]}',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: 'Roboto',
-                ),
+                style: Theme.of(context).textTheme.bodyMedium!,
               );
             },
           ),
