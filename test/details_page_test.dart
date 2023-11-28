@@ -35,41 +35,6 @@ void main() {
           expect(find.byIcon(Icons.arrow_back_ios), findsOneWidget);
         },
       );
-
-      // testWidgets(
-      //   'DetailsPage getCriteria() displays the correct text in RichText',
-      //   (WidgetTester tester) async {
-      //     await tester.pumpWidget(
-      //       MaterialApp(
-      //         home: DetailsPage(
-      //           item: Items(
-      //             id: 1,
-      //             name: 'Top gainers',
-      //             tag: 'Intraday Bullish',
-      //             color: 'green',
-      //             criteria: [
-      //               Criteria(
-      //                 type: 'plain_text',
-      //                 text: 'Sort - %price change in descending order',
-      //               ),
-      //             ],
-      //           ),
-      //         ),
-      //       ),
-      //     );
-
-      //     expect(
-      //       find.descendant(
-      //         of: find.byType(ListView),
-      //         matching: find.widgetWithText(
-      //           RichText,
-      //           'Sort - %price change in descending order',
-      //         ),
-      //       ),
-      //       findsOneWidget,
-      //     );
-      //   },
-      // );
     },
   );
 
