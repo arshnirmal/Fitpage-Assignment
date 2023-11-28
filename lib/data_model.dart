@@ -94,6 +94,8 @@ List<TextSpan> getCriteria(Criteria criteria, BuildContext context) {
               style: Theme.of(context).textTheme.bodyMedium!.merge(
                     const TextStyle(
                       color: Colors.blue,
+                      decoration: TextDecoration.underline,
+                      decorationColor: Colors.blue,
                     ),
                   ),
               recognizer: TapGestureRecognizer()
@@ -117,6 +119,8 @@ List<TextSpan> getCriteria(Criteria criteria, BuildContext context) {
               style: Theme.of(context).textTheme.bodyMedium!.merge(
                     const TextStyle(
                       color: Colors.blue,
+                      decoration: TextDecoration.underline,
+                      decorationColor: Colors.blue,
                     ),
                   ),
               recognizer: TapGestureRecognizer()

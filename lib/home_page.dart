@@ -15,12 +15,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final List<Items> items = [];
-  bool isDataLoading = false;
 
   getData() async {
-    setState(() {
-      isDataLoading = true;
-    });
     final response = await http.get(Uri.parse('http://coding-assignment.bombayrunning.com/data.json'));
 
     if (response.statusCode == 200) {
@@ -28,7 +24,6 @@ class _HomePageState extends State<HomePage> {
 
       setState(() {
         items.addAll(data.map<Items>((json) => Items.fromJson(json)).toList());
-        isDataLoading = false;
       });
     }
     // debugPrint(response.body);
@@ -49,7 +44,7 @@ class _HomePageState extends State<HomePage> {
           'Home Page',
         ),
       ),
-      body: isDataLoading
+      body: items.isEmpty
           ? const Center(
               child: CircularProgressIndicator(),
             )
