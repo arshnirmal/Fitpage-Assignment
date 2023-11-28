@@ -12,6 +12,14 @@ class Items {
   String color;
   List<Criteria> criteria;
 
+  Items({
+    required this.id,
+    required this.name,
+    required this.tag,
+    required this.color,
+    required this.criteria,
+  });
+
   Items.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
@@ -26,6 +34,12 @@ class Criteria {
   String type;
   String text;
   Map<String, dynamic>? variable;
+
+  Criteria({
+    required this.type,
+    required this.text,
+    this.variable,
+  });
 
   Criteria.fromJson(Map<String, dynamic> json)
       : type = json['type'],
@@ -56,7 +70,7 @@ List<TextSpan> getCriteria(Criteria criteria, BuildContext context) {
 
         text.replaceFirst('\$$variableName', '($variableName)');
 
-        debugPrint("Found variable: $variableName in text: $text");
+        // debugPrint("Found variable: $variableName in text: $text");
 
         int startIndex = match.start;
         int endIndex = match.end;

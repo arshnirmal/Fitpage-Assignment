@@ -33,7 +33,7 @@ class VariablesPage extends StatelessWidget {
                     final values = List.from(variable['values']);
                     values.sort((a, b) => a.abs().compareTo(b.abs()));
 
-                    debugPrint("Values: $values variable: $variable");
+                    // debugPrint("Values: $values variable: $variable");
 
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.start,
