@@ -27,6 +27,7 @@ class VariablesPage extends StatelessWidget {
           child: variable['type'] == 'value'
               ? ListView.builder(
                   shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: variable['values'].length,
                   padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                   itemBuilder: (context, index) {

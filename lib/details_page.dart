@@ -63,6 +63,7 @@ class DetailsPage extends StatelessWidget {
               ListView.separated(
                 itemCount: item.criteria.length,
                 shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 separatorBuilder: (context, index) => Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
