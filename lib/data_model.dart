@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:fitpage_assignment/variable_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Items {
   int id;
@@ -51,6 +52,8 @@ List<TextSpan> getCriteria(Criteria criteria, BuildContext context) {
     variablePattern.allMatches(text).forEach(
       (match) {
         String variableName = match.group(1)!;
+        Map<String, dynamic> variable = criteria.variable!['\$$variableName'];
+
         text.replaceFirst('\$$variableName', '($variableName)');
 
         debugPrint("Found variable: $variableName in text: $text");
@@ -70,10 +73,10 @@ List<TextSpan> getCriteria(Criteria criteria, BuildContext context) {
           );
         }
 
-        if (criteria.variable!['\$$variableName']['type'] == 'value') {
+        if (variable['type'] == 'value') {
           textSpans.add(
             TextSpan(
-              text: '(${criteria.variable!['\$$variableName']['values'][0]})',
+              text: '(${variable['values'][0]})',
               style: Theme.of(context).textTheme.bodyMedium!.merge(
                     const TextStyle(
                       color: Colors.blue,
@@ -93,10 +96,10 @@ List<TextSpan> getCriteria(Criteria criteria, BuildContext context) {
             ),
           );
         }
-        if (criteria.variable!['\$$variableName']['type'] == 'indicator') {
+        if (variable['type'] == 'indicator') {
           textSpans.add(
             TextSpan(
-              text: '(${criteria.variable!['\$$variableName']['default_value']})',
+              text: '(${variable['default_value']})',
               style: Theme.of(context).textTheme.bodyMedium!.merge(
                     const TextStyle(
                       color: Colors.blue,
@@ -135,4 +138,25 @@ List<TextSpan> getCriteria(Criteria criteria, BuildContext context) {
     return textSpans;
   }
   return [const TextSpan(text: '')];
+}
+
+class NumericalRangeFormatter extends TextInputFormatter {
+  final int min;
+  final int max;
+
+  NumericalRangeFormatter({required this.min, required this.max});
+
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    if (newValue.text == '') {
+      return newValue;
+    } else if (int.parse(newValue.text) < min) {
+      return const TextEditingValue().copyWith(text: min.toStringAsFixed(2));
+    } else {
+      return int.parse(newValue.text) > max ? oldValue : newValue;
+    }
+  }
 }

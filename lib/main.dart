@@ -19,6 +19,11 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         useMaterial3: true,
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+          },
+        ),
         appBarTheme: const AppBarTheme(
           backgroundColor: Color.fromRGBO(15, 76, 117, 1),
           titleTextStyle: TextStyle(
@@ -114,56 +119,62 @@ class _HomePageState extends State<HomePage> {
             )
           : Center(
               child: Container(
+                height: MediaQuery.of(context).size.height * 0.5,
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 color: Theme.of(context).primaryColor,
-                child: ListView.separated(
+                child: ListView.builder(
                   itemCount: items.length,
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  separatorBuilder: (context, index) => Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 8),
-                    decoration: DottedDecoration(
-                      shape: Shape.line,
-                      linePosition: LinePosition.bottom,
-                      color: Colors.white,
-                    ),
-                  ),
                   itemBuilder: (context, index) {
                     final item = items[index];
-                    return ListTile(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DetailsPage(
-                              item: item,
-                            ),
+                    return Column(
+                      children: [
+                        ListTile(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailsPage(
+                                  item: item,
+                                ),
+                              ),
+                            );
+                          },
+                          title: Text(
+                            item.name,
+                            style: Theme.of(context).textTheme.titleMedium!.merge(
+                                  const TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: Colors.white,
+                                  ),
+                                ),
                           ),
-                        );
-                      },
-                      title: Text(
-                        item.name,
-                        style: Theme.of(context).textTheme.titleMedium!.merge(
-                              const TextStyle(
-                                decoration: TextDecoration.underline,
-                                decorationColor: Colors.white,
-                              ),
-                            ),
-                      ),
-                      subtitle: Text(
-                        item.tag,
-                        style: Theme.of(context).textTheme.titleSmall!.merge(
-                              TextStyle(
-                                color: item.color == 'red'
-                                    ? const Color.fromRGBO(255, 0, 0, 1)
-                                    : item.color == 'green'
-                                        ? const Color.fromRGBO(0, 255, 0, 1)
-                                        : const Color.fromRGBO(0, 0, 255, 1),
-                                decoration: TextDecoration.underline,
-                                decorationColor: Colors.white,
-                              ),
-                            ),
-                      ),
+                          subtitle: Text(
+                            item.tag,
+                            style: Theme.of(context).textTheme.titleSmall!.merge(
+                                  TextStyle(
+                                    color: item.color == 'red'
+                                        ? const Color.fromRGBO(255, 0, 0, 1)
+                                        : item.color == 'green'
+                                            ? const Color.fromRGBO(0, 255, 0, 1)
+                                            : const Color.fromRGBO(0, 0, 255, 1),
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: Colors.white,
+                                  ),
+                                ),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 8),
+                          decoration: DottedDecoration(
+                            shape: Shape.line,
+                            linePosition: LinePosition.bottom,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                     );
                   },
                 ),
