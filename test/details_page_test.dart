@@ -76,6 +76,15 @@ void main() {
   group(
     'getCriteria test',
     () {
+      Matcher equalsIgnoreDebugLabel(TextSpan expected) {
+        return predicate(
+          (TextSpan actual) {
+            return actual.text == expected.text && actual.style == expected.style;
+          },
+          'TextSpan matches (ignoring debugLabel)',
+        );
+      }
+
       test(
         'getCriteria handles plain_text correctly',
         () {
@@ -91,11 +100,11 @@ void main() {
         () {
           final criteria = Criteria(
             type: 'variable',
-            text: 'Today\'s open < yesterday\'s low by \$1 %',
+            text: 'Max of last 5 days close > Max of last 120 days close by \$1 %',
             variable: {
               "\$1": {
                 "type": "value",
-                "values": [-3, -1, -2, -5, -10]
+                "values": [2, 1, 3, 5]
               }
             },
           );
@@ -106,12 +115,12 @@ void main() {
             result,
             [
               TextSpan(
-                text: 'Today\'s open < yesterday\'s low by ',
-                style: Theme.of(MockBuildContext as BuildContext).textTheme.bodyMedium,
+                text: 'Max of last 5 days close > Max of last 120 days close by ',
+                style: Theme.of(MockBuildContext()).textTheme.bodyMedium,
               ),
               TextSpan(
-                text: '(-3)',
-                style: Theme.of(MockBuildContext as BuildContext).textTheme.bodyMedium!.merge(
+                text: '(2)',
+                style: Theme.of(MockBuildContext()).textTheme.bodyMedium!.merge(
                       const TextStyle(
                         color: Colors.blue,
                         decoration: TextDecoration.underline,
@@ -122,9 +131,56 @@ void main() {
               ),
               TextSpan(
                 text: ' %',
-                style: Theme.of(MockBuildContext as BuildContext).textTheme.bodyMedium,
+                style: Theme.of(MockBuildContext()).textTheme.bodyMedium,
               ),
-            ],
+            ].map(equalsIgnoreDebugLabel),
+          );
+        },
+      );
+
+      test(
+        'getCriteria handles indicator correctly',
+        () {
+          final criteria = Criteria(
+            type: 'variable',
+            text: 'RSI \$4 > 20',
+            variable: {
+              "\$4": {
+                "type": "indicator",
+                "study_type": "rsi",
+                "parameter_name": "period",
+                "min_value": 1,
+                "max_value": 99,
+                "default_value": 14,
+              }
+            },
+          );
+
+          final result = getCriteria(criteria, MockBuildContext());
+
+          expect(
+            result,
+            [
+              TextSpan(
+                text: 'RSI ',
+                style: Theme.of(MockBuildContext()).textTheme.bodyMedium,
+              ),
+              TextSpan(
+                text: '(14)',
+                style: Theme.of(MockBuildContext()).textTheme.bodyMedium!.merge(
+                      const TextStyle(
+                        color: Colors.blue,
+                        decoration: TextDecoration.underline,
+                        decorationColor: Colors.blue,
+                      ),
+                    ),
+                recognizer: TapGestureRecognizer(),
+              ),
+              TextSpan(
+                text: ' > 20',
+                style: Theme.of(MockBuildContext()).textTheme.bodyMedium,
+              ),
+            ].map(equalsIgnoreDebugLabel),
           );
         },
       );
@@ -133,5 +189,3 @@ void main() {
 }
 
 class MockBuildContext extends Mock implements BuildContext {}
-
-class MockNavigatorObserver extends Mock implements NavigatorObserver {}
