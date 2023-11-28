@@ -1,8 +1,9 @@
 # Fitpage-Assignment
-Flutter Version : 3.10.5 • channel stable 
+Flutter Version : 3.10.5 • channel stable
 
-To run this project,
+This project was made as an Assignment for recruitment in Fitpage.
 
+# To run this project,
 Step 1: Clone the repository
 $ git clone [https://github.com/arshnirmal/Fitpage-Assignment.git](https://github.com/arshnirmal/Fitpage-Assignment.git)
 
