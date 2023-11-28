@@ -77,7 +77,7 @@ void main() {
               Uri.parse('http://coding-assignment.bombayrunning.com/data.json'),
             ),
           ).thenAnswer(
-            (_) async => http.Response('{"id": 1}', 200),
+            (_) async => http.Response('{"id": 1, "name": "Top gainers", "tag":"Intraday Bullish", "color": "green", "criteria": []},', 200),
           );
 
           await tester.pumpWidget(
@@ -100,7 +100,7 @@ void main() {
               Uri.parse('http://coding-assignment.bombayrunning.com/data.json'),
             ),
           ).thenAnswer(
-            (_) async => http.Response('{"id": 1}', 200),
+            (_) async => http.Response('{"id": 1, "name": "Top gainers", "tag":"Intraday Bullish", "color": "green", "criteria": []},', 200),
           );
 
           await tester.pumpWidget(
@@ -108,7 +108,8 @@ void main() {
               home: HomePage(),
             ),
           );
-
+          await tester.pumpAndSettle();
+          
           expect(find.byType(ListView), findsOneWidget);
         },
       );
